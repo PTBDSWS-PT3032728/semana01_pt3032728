@@ -1,21 +1,20 @@
-# A very simple Flask Hello World app for you to get started with...
 from flask import Flask, request, make_response, redirect, abort
 app = Flask(__name__)
 
 #Tela inicial com uma função simples que retorna um "Hello World".
 @app.route('/') #Rota padrão do site (inicial)
 def hello_world(): #Função
-    return '<h1>Hello World!</h1><p><b><h2>Disciplina PTBDSWS</h2></b></p>' #Retorno em string, utilizando tags
+    return '<h1>Hello World!</h1><h2>Disciplina PTBDSWS</h2>'; #Retorno em string, utilizando tags
 
 #Ao utilizar a url para adicionar o nome do usuário, é possível utilizá-lo como atributo para passar como parâmetro de uma função que retorna esse nome dentro do site.
 @app.route('/user/<name>')
 def user(name):
-    return '<h1>Hello, {}!</h1>'.format(name)
+    return '<h1>Hello, {}!</h1>'.format(name);
 
 #O request serve para coletar dados que o servidor recebe do usuário, no caso o User-Agent apresenta os dados do navegador e o sistema operacional utilizado.
 @app.route('/contextorequisicao')
 def dadosNavegador():
-    return 'Your browser is {}'.format(request.headers.get('User-Agent'))
+    return '<p>Your browser is {}</p>'.format(request.headers.get('User-Agent'));
 
 #O erro de Bad Request acontece quando o servidor recebe uma requisição com informações faltantes ou erradas pelo lado do cliente, e não consegue interpretar.
 #Obs: No exemplo da atividade aparenta ser um retorno simples escrito. Mas poderia ser utilizado o abort(400). Na dúvida, deixei conforme aparenta o mais próximo da resolução.
@@ -23,9 +22,9 @@ def dadosNavegador():
 def codigoStatusDiferente():
     nome = request.form.get('nome') #Por meio de request o valor de 'nome' é coletado (se foi enviado)
     if not nome: #Se 'nome' não teve nenhum valor enviado, retorna bad request
-        return 'Bad request', 400 #Como no caso não foi, o servidor retorna o erro 400.
+        return '<p>Bad request</p>', 400 #Como no caso não foi, o servidor retorna o erro 400.
     else: #Se teve um valor em 'nome', retorna Ok
-        return 'Ok, {}.'.format(nome)
+        return '<p>Ok, {}.</p>'.format(nome)
 
 #É possível criar objetos de resposta, que podem carregar atributos e serem retornados
 @app.route('/objetoresposta')
